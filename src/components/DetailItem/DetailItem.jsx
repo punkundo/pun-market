@@ -20,8 +20,6 @@ const DetailItem = () => {
 
   const addButton = (item) => {
     let checkItem = cartItems.findIndex(n => n.id === item.id)
-    
-    console.log(checkItem);
     if ( checkItem < 0 ) {
       setItems([...cartItems, item])
     } else{

@@ -14,6 +14,7 @@ import { storage } from '../firebase.config'
 import { useStateValue } from '../../context/StateProvider'
 import { getAllItems, saveItems } from '../../utils/firebaseFunctions'
 import { actionType } from '../../context/reducer'
+import { useEffect } from 'react'
 
 const CreateItemContainer = () => {
 
@@ -31,7 +32,6 @@ const CreateItemContainer = () => {
   const uploadImage = (e) => {
     setIsLoading(true);
     const imageFile = e.target.files[0]
-    console.log(imageFile)
     const storageRef = ref(storage, `Images/${Date.now()}-${imageFile.name}`)
     const uploadTask = uploadBytesResumable(storageRef, imageFile)
 
@@ -140,6 +140,9 @@ const CreateItemContainer = () => {
     })
   }
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center">

@@ -3,8 +3,9 @@ import {BiMinus, BiPlus} from 'react-icons/bi'
 import { motion } from "framer-motion"
 import { useStateValue } from '../../context/StateProvider'
 import { actionType } from '../../context/reducer'
-let items = JSON.parse(localStorage.getItem("cartItems")) 
-  ? JSON.parse(localStorage.getItem("cartItems")) 
+
+let items = JSON.parse(localStorage.getItem("sectionData")) 
+  ? JSON.parse(localStorage.getItem("sectionData")) 
   : []
 
 const CartItem = ({ item, setFlag, flag }) => {

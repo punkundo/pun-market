@@ -40,6 +40,11 @@ const Header = () => {
       type: actionType.SET_USER,
       user: null,
     })
+
+    dispatch({
+      type: actionType.SET_CART_ITEMS,
+      cartItems: [],
+    })
   }
 
   const showCart = () => {
@@ -52,7 +57,7 @@ const Header = () => {
   return (
     <header id="header" className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary">
       {/* desktop & tablet */}
-      <div className="hidden md:flex w-full h-full items-center justify-between">
+      <div className="hidden lg:flex w-full h-full items-center justify-between">
         <Link to={"/"} className="flex items-center gap-2" >
           <img src="https://proptit.com/static/images/logo.svg" className="w-8 object-cover" alt="logo"/>
           <p className="text-headingColor text-xl font-bold">PunMARKET</p>
@@ -65,7 +70,7 @@ const Header = () => {
             exit={{ opacity: 0, scale: 2}}
             className="flex items-center gap-8"
           >
-            <a href="#header" className="text-base text-textColor duration-100 transition-all ease-in-out cursor-pointer uppercase font-semibold hover:text-footerInfo">Trang chủ</a>
+            <Link to='/' className="text-base text-textColor duration-100 transition-all ease-in-out cursor-pointer uppercase font-semibold hover:text-footerInfo">Trang chủ</Link>
             <a href="#menu" className="text-base text-textColor duration-100 transition-all ease-in-out cursor-pointer uppercase font-semibold hover:text-footerInfo">Sản phẩm</a>
             <a href="#home" className="text-base text-textColor duration-100 transition-all ease-in-out cursor-pointer uppercase font-semibold hover:text-footerInfo">Về chúng tôi</a>
             <a href="#footer" className="text-base text-textColor duration-100 transition-all ease-in-out cursor-pointer uppercase font-semibold hover:text-footerInfo">Dịch vụ</a>
@@ -123,7 +128,7 @@ const Header = () => {
         
 
       {/* smartphone */}
-      <div className="flex items-center justify-between md:hidden w-full h-full">
+      <div className="flex items-center justify-between lg:hidden w-full h-full">
         <div className="relative flex items-center justify-center">
           <MdShoppingBasket 
             className="text-textColor text-2xl ml-8 cursor-pointer"
@@ -165,8 +170,8 @@ const Header = () => {
                     )}
 
                     <ul className="flex flex-col">
-                      <a href="#header" className="px-4 py-4 text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer hover:text-footerInfo"
-                        onClick={() => setIsMenu(false)}>Trang chủ</a>
+                      <Link to='/' className="px-4 py-4 text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer hover:text-footerInfo"
+                        onClick={() => setIsMenu(false)}>Trang chủ</Link>
                       <a href="#menu" className="px-4 py-4 text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer hover:text-footerInfo"
                         onClick={() => setIsMenu(false)}>Menu</a>
                       <a href="#home" className="px-4 py-4 text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer hover:text-footerInfo"

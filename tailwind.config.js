@@ -49,7 +49,8 @@ module.exports = {
         footerInfo: "#F06A72",
         footerBg: "#FFF7F2",
         btnBuy: "rgb(255, 57, 69)",
-        textBtnBuy: "rgb(255, 255, 255)"
+        textBtnBuy: "rgb(255, 255, 255)",
+        bgPayment: "#3399FF"
       }
     },
   },

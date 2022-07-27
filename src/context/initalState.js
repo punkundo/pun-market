@@ -6,7 +6,9 @@ const cartInfo = fetchCart()
 export const initialState = {
     user: userInfo,
     cartShow: false,
-    cartItems: cartInfo,
+    cartItems: null,
     total: 0,
     marketItems: null,
+    sectionData: null,
+    popupShow: true,
 }

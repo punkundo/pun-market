@@ -6,13 +6,29 @@ import { useStateValue } from '../../context/StateProvider'
 import { actionType } from '../../context/reducer'
 import EmptyCart from "../img/emptyCart.svg"
 import CartItem from '../CartItem/CartItem'
+import { Link } from 'react-router-dom'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { app } from '../firebase.config'
 
 const CartContainer = () => {
 
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue()
   const [tot, setTot] = useState(0)
   const [flag, setFlag] = useState(1)
-  const [isClick, setIsClick] = useState(false)
+
+  const firebaseAuth = getAuth(app)
+  const provider = new GoogleAuthProvider()
+
+  const login = async () => {
+    if (!user) {
+      const {user:{refreshToken, providerData}} = await signInWithPopup(firebaseAuth, provider)
+      dispatch({
+        type: actionType.SET_USER,
+        user: providerData[0]
+      })
+      localStorage.setItem('user', JSON.stringify(providerData[0]))
+    } 
+  }
 
   const showCart = () => {
     dispatch({
@@ -74,21 +90,20 @@ const CartContainer = () => {
         {/*  cart Item section */}
           {
             cartItems && cartItems.map(item => (
-              <CartItem 
+                <CartItem  
                 key={item.id} 
                 item={item}
                 setFlag={setFlag}
                 flag={flag}
               />
             ))
-            
           }
         </div>
         {/* cart Total section */}
         <div className="w-full flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center
         justify-evenly px-8 py-2">
           <div className="w-full flex items-center justify-between">
-            <p className="text-gray-400 text-lg">Sub Total</p>
+            <p className="text-gray-400 text-lg">Thành tiền</p>
             <p className="text-gray-400 text-lg">
               {tot.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{` `}
               <span className="text-sm underline">đ</span>
@@ -96,7 +111,7 @@ const CartContainer = () => {
           </div>
 
           <div className="w-full flex items-center justify-between">
-            <p className="text-gray-400 text-lg">Delivery</p>
+            <p className="text-gray-400 text-lg">Phí vận chuyển</p>
             <p className="text-gray-400 text-lg">
               12,000{` `}
               <span className="text-sm underline">đ</span>
@@ -105,7 +120,7 @@ const CartContainer = () => {
 
           <div className="w-full border-b border-gray-600">
             <div className="w-full flex items-center justify-between">
-              <p className="text-gray-400 text-xl font-semibold">Total</p>
+              <p className="text-gray-400 text-xl font-semibold">Tổng tiền</p>
               <p className="text-gray-400 text-xl font-semibold">
                 {(tot+12000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{` `}
                 <span className="text-sm underline">đ</span>
@@ -114,22 +129,25 @@ const CartContainer = () => {
           </div>
 
           {user ? (
-            <motion.button
+            <Link to="/payment">
+              <motion.button
               whileTap={{ scale: 0.8 }}
               type="button"
               className="w-full p-2 rounded-full bg-gradient-to-tr from-orange-400 to-orange-500
               text-gray-50 text-lg my-2 hover:shadow-lg"
             >
-              Check Out
+              Thanh toán
             </motion.button>
+            </Link>
           ) : (
             <motion.button
               whileTap={{ scale: 0.8 }}
               type="button"
               className="w-full p-2 rounded-full bg-gradient-to-tr from-orange-400 to-orange-500
               text-gray-50 text-lg my-2 hover:shadow-lg"
+              onClick={login}
             >
-              Login to checkout
+              Đăng nhập để thanh toán
             </motion.button>
           )}
         </div>

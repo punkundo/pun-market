@@ -5,6 +5,7 @@ import NotFound from '../img/NotFound.svg'
 import { useStateValue } from '../../context/StateProvider'
 import { actionType } from '../../context/reducer'
 import { Link } from 'react-router-dom'
+import { saveSectionData } from '../../utils/firebaseFunctions'
 
 const RowContainer = ({ flag, data, scrollValue }) => {
 
@@ -13,7 +14,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
     ? JSON.parse(localStorage.getItem("cartItems")) 
     : []
   )
-  const [{ cartItems }, dispatch] = useStateValue()
+  const [{ user, cartItems }, dispatch] = useStateValue()
 
   const addButton = (e, item) => {
     e.preventDefault(); 
@@ -25,6 +26,16 @@ const RowContainer = ({ flag, data, scrollValue }) => {
       cartItems[checkItem].qty += 1
       setItems([...cartItems])
     }
+    const data = {
+      uid: user.uid,
+      itemId: item.id,
+      titleSec: item.title,
+      imageURLSec: item.imageURL,
+      qtySec: item.qty, 
+      priceSec: item.price
+    }
+    // console.log(data)
+    saveSectionData(data, item)
   }
 
   const addToCart = () => {
